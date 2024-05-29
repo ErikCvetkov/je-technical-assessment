@@ -30,7 +30,6 @@ const Results: React.FC = () => {
             }
             const data = await response.json();
             setResult(data);
-            console.log(data);
         } catch (error: any) {
             setError(error.message);
         } finally {
@@ -44,7 +43,7 @@ const Results: React.FC = () => {
             <div className='border shadow rounded p-4'>
                 {loading && <span>Loading...</span>}
                 {error && <span>Error: {error}</span>}
-                {result &&
+                {result && !loading && !error &&
                     <div className='movie-preview flex'>
                         <img src={result.Poster} className='w-40' alt={`Poster of the ${result.Title} movie`} />
                         <div className='movie-info ps-4 pe-4'>

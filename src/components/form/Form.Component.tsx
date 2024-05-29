@@ -1,14 +1,24 @@
 import React from 'react';
 
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { handleSearch } from '../../features/searchSlice';
 
 const Form: React.FC = () => {
 
+    const [query, setQuery] = useState<string>('');
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            dispatch(handleSearch(query));
+        }, 500);
+
+        return () => clearTimeout(timeoutId);
+    }, [query])
+
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(handleSearch(e.target.value));
+        setQuery(e.target.value);
     }
 
     return (

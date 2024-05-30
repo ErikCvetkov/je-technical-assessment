@@ -6,7 +6,7 @@ import Main from '../../components/main /Main.Component';
 const Home: React.FC = () => {
     return (
         <>
-            <Header />
+            <Header text='👋🏼 Welcome to the movie search' />
             <Main />
         </>
     )

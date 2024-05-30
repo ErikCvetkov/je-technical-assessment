@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Header: React.FC = () => {
+const Header: React.FC<{ text: string }> = ({ text }) => {
     return (
-        <header className='p-6 text-3xl font-bold container mx-auto'>👋🏼 Welcome to the movie search</header>
+        <header className='p-6 text-3xl font-bold container mx-auto'>{text}</header>
     )
 }
 

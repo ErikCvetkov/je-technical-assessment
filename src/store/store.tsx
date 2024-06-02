@@ -5,7 +5,7 @@ import movieReducer from '../features/movieSlice';
 export const store = configureStore({
     reducer: {
         search: searchReducer,
-        movies: movieReducer,
+        savedMovies: movieReducer,
     },
 });
 

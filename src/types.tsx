@@ -1,5 +1,9 @@
 export interface MovieState {
-    movies: Record<string, any>[];
+    movies: SearchResult[];
+}
+
+export interface Movie {
+    imdbID: string;
 }
 
 export interface SearchState {
@@ -16,3 +20,5 @@ export interface SearchResult {
     Actors: string;
     imdbID: string;
 }
+
+export type FetchType = 't' | 'i';

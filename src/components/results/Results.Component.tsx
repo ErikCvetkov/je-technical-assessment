@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { RootState } from '../../store/store';
 
 import { SearchResult } from '../../types';
+import { getMovieData } from '../../helpers';
 
 const Results: React.FC = () => {
 
@@ -14,25 +15,20 @@ const Results: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            setError(null);
+            try {
+                const movieData = await getMovieData('t', title);
+                setResult(movieData);
+            } catch (error: any) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
         if (title) fetchData();
     }, [title]);
-
-    const fetchData = async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const response = await fetch(`https://www.omdbapi.com/?apikey=d51c3617&t=${title}}`);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            setResult(data);
-        } catch (error: any) {
-            setError(error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
 
     const displayContent = () => {
         if (loading) return (<span>Loading...</span>);

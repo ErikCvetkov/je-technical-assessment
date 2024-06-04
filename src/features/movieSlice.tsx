@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { MovieState, SearchResult } from '../types';
 
+const localStorageData = window.localStorage.getItem('movies');
+
 const initialState: MovieState = {
-    movies: [],
+    movies: localStorageData ? JSON.parse(localStorageData) : [],
 };
 
 const movieSlice = createSlice({
@@ -24,6 +26,8 @@ const movieSlice = createSlice({
             if (state.movies.length > 5) {
                 state.movies.splice(5);
             }
+
+            window.localStorage.setItem('movies',JSON.stringify(state.movies));
         },
     },
 });

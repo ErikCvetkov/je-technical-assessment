@@ -6,6 +6,10 @@ import { RootState } from '../../store/store';
 
 import { SearchResult } from '../../types';
 import { getMovieData } from '../../helpers';
+import Message from '../message/Message.Component';
+
+import { handleSearch } from '../../features/searchSlice';
+import { useDispatch } from 'react-redux';
 
 const Results: React.FC = () => {
 
@@ -13,6 +17,7 @@ const Results: React.FC = () => {
     const [result, setResult] = useState<SearchResult | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -31,9 +36,9 @@ const Results: React.FC = () => {
     }, [title]);
 
     const displayContent = () => {
-        if (loading) return (<span>Loading...</span>);
-        if (error) return (<span>Error: {error}</span>);
-        if (result && result.Response === 'False') return (<span>{result.Error}</span>);
+        if (loading) return (<Message text='Loading...'/>);
+        if (error) return (<Message text={error}/>);
+        if (result && result.Response === 'False') return (<Message text={result.Error}/>);
         if (result) return (
             <div className='movie-preview flex'>
                 {result.Poster !== 'N/A' && <img src={result.Poster} className='w-24' alt={`Poster of the ${result.Title} movie`} />}
@@ -41,7 +46,7 @@ const Results: React.FC = () => {
                     <div className='movie-info__title text-xl font-bold'>{result.Title}</div>
                     {result.Year !== 'N/A' && <div className='movie-info__year'>{result.Year}</div>}
                     {result.Actors !== 'N/A' && <div className='movie-info__actors'>{result.Actors}</div>}
-                    <Link className='movie-info__link border rounded p-3 bg-emerald-300' to={`movie/${result.imdbID}`}>Read more</Link>
+                    <Link className='movie-info__link border rounded p-3 bg-emerald-300' to={`movie/${result.imdbID}`} onClick={() => dispatch(handleSearch(''))}>Read more</Link>
                 </div>
             </div>
         )

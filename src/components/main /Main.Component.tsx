@@ -12,6 +12,7 @@ const Main: React.FC = () => {
 
     return (
         <main className='container p-6 mx-auto flex'>
+            <span>test</span>
             <section className='basis-9/12'>
                 <Form />
                 {title && <Results />}
